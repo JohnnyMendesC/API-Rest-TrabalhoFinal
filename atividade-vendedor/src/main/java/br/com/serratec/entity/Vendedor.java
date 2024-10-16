@@ -12,9 +12,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 @Entity
-public class Vendedor {
+public abstract class Vendedor {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Schema(description="Identificador único do usuário")
 	private Long id;
 	
@@ -22,7 +22,7 @@ public class Vendedor {
 	@Size(max = 50)
 	@Column(nullable = false, length = 50)
 	@Schema(description="Nome do usuário")
-	private String name;
+	private String nome;
 	
 	@Email
 	@Schema(description="Email único do usuário")
@@ -38,17 +38,18 @@ public class Vendedor {
 	@Column(nullable = false, length = 50)
 	@Schema(description="Salário do usuário")
 	private Double salario;
+	
 	public Long getId() {
 		return id;
 	}
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public String getName() {
-		return name;
+	public String getnome() {
+		return nome;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setnome(String nome) {
+		this.nome = nome;
 	}
 	public String getEmail() {
 		return email;
@@ -62,7 +63,4 @@ public class Vendedor {
 	public void setSalario(Double salario) {
 		this.salario = salario;
 	}
-	
-	
-	
 }

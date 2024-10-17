@@ -44,11 +44,44 @@ public class LancamentoVendas {
 	@JsonBackReference //complementa o @JsonManagedReference para não dar loops
 	@JoinColumn(name ="id_vendedorAutonomo")
 	private VendedorAutonomo vendedorAutonomo;
-	
-	public VendedorAutonomo getVeiculo() {
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public LocalDate getData() {
+		return data;
+	}
+
+	public void setData(LocalDate data) {
+		this.data = data;
+	}
+
+	public Double getValor() {
+		return valor;
+	}
+
+	public void setValor(Double valor) {
+		this.valor = valor;
+	}
+
+	public Double getSalario() {
+		return salario;
+	}
+
+	public void setSalario(Double salario) {
+		this.salario = salario;
+	}
+
+	public VendedorAutonomo getVendedorAutonomo() {
 		return vendedorAutonomo;
 	}
-	public void setVeiculo(VendedorAutonomo vendedorAutonomo) {
+
+	public void setVendedorAutonomo(VendedorAutonomo vendedorAutonomo) {
 		this.vendedorAutonomo = vendedorAutonomo;
 	}
 }

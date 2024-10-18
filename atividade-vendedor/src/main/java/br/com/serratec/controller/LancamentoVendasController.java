@@ -1,6 +1,5 @@
 package br.com.serratec.controller;
 
-import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.serratec.dto.LancamentoVendasRequestDTO;
 import br.com.serratec.dto.LancamentoVendasResponseDTO;
@@ -28,7 +26,7 @@ public class LancamentoVendasController {
 	@Autowired
 	private LancamentoVendasService service;
 
-	@Operation(summary = "Insere uma nova venda", description = "A resposta retorna a venda efetuada")
+	@Operation(summary = "Busca venda por id", description = "A resposta retorna a venda efetuada pelo vendedor")
 	@ApiResponses(value = { @ApiResponse(responseCode = "200",  content = {
 			@Content(schema = @Schema(implementation = LancamentoVendas.class), mediaType = "application/json") }, description = "Lancamento de venda cadastrado com sucesso"),
 			@ApiResponse(responseCode = "401", description = "Erro de autenticação"),
@@ -48,14 +46,14 @@ public class LancamentoVendasController {
 			@ApiResponse(responseCode = "404", description = "Recurso não encontrado"),
 			@ApiResponse(responseCode = "505", description = "Exceção interna da aplicação") })
 	@PostMapping
-	public ResponseEntity<Object> inserir(@RequestBody LancamentoVendas lancamentoVendas) {
-		LancamentoVendasRequestDTO dto = service.inserir(lancamentoVendas);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-				.buildAndExpand(lancamentoVendas.getId()).toUri();
-		return ResponseEntity.created(uri).body(dto);
+	public ResponseEntity<Object> inserir(@RequestBody LancamentoVendasRequestDTO dto) {
+		LancamentoVendasResponseDTO dtoResponse = service.inserir(dto);
+		return ResponseEntity.created(null).body(dtoResponse);
+		// o uri ja lança o /id1 no header do postman
 	}
 	
-	@Operation(summary = "Insere uma nova venda", description = "A resposta retorna a venda efetuada")
+	
+	@Operation(summary = "Lista Paginada de Vendas", description = "Retorna Lançamentos de Venda Paginadas")
 	@ApiResponses(value = { @ApiResponse(responseCode = "200",  content = {
 			@Content(schema = @Schema(implementation = LancamentoVendas.class), mediaType = "application/json") }, description = "Lancamento de venda cadastrado com sucesso"),
 			@ApiResponse(responseCode = "401", description = "Erro de autenticação"),

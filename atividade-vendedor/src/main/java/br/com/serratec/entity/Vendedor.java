@@ -15,7 +15,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "tipo_vendedor")
+@DiscriminatorColumn(name = "tipo_vendedor") //isso aqui é o DTYPE
 @Entity
 public abstract class Vendedor {
 	@Id

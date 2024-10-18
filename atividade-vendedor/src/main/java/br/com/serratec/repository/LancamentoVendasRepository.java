@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import br.com.serratec.entity.LancamentoVendas;
 
-public interface LancamentoVendasRepository extends JpaRepository<LancamentoVendas, Long>{
-	
-	Page<LancamentoVendas> findByVendedor(Long id, Pageable pageable);
+public interface LancamentoVendasRepository extends JpaRepository<LancamentoVendas, Long>{	
+	Page<LancamentoVendas> findByVendedorAutonomo(Long id, Pageable pageable);
 }

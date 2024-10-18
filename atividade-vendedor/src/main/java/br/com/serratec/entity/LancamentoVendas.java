@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -30,11 +31,6 @@ public class LancamentoVendas {
 	@Email
 	@Schema(description="Email único do usuário")
 	private Double valor;
-	
-	@NotBlank(message = "Preencha o valor do salário")
-	@Column(nullable = false, length = 50)
-	@Schema(description="Salário do usuário")
-	private Double salario;
 	
 	//relação ORM com vendedor autonomo	n vendas para 1 vendedor
 	
@@ -67,14 +63,6 @@ public class LancamentoVendas {
 
 	public void setValor(Double valor) {
 		this.valor = valor;
-	}
-
-	public Double getSalario() {
-		return salario;
-	}
-
-	public void setSalario(Double salario) {
-		this.salario = salario;
 	}
 
 	public VendedorAutonomo getVendedorAutonomo() {

@@ -1,36 +1,46 @@
 package br.com.serratec.dto;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 import br.com.serratec.entity.LancamentoVendas;
+import br.com.serratec.entity.VendedorAutonomo;
 
-public class LancamentoVendasRequestDTO {
-	
+public class LancamentoVendasRequestDTO {	
 	//atributos
-	private Long id;
 	private LocalDate data;
 	private Double valor;
 	private String nomeVendedor;
 	
+	private VendedorAutonomo vendedorAutonomo;
+	public VendedorAutonomo getVendedorAutonomo() {
+		return vendedorAutonomo;
+	}
+	public void setVendedorAutonomo(VendedorAutonomo vendedorAutonomo) {
+		this.vendedorAutonomo = vendedorAutonomo;
+	}
 
+	private Set<LancamentoVendas> lancamentoVendas = new HashSet<>();
+	//getset
+	public Set<LancamentoVendas> getLancamentoVendas() {
+		return lancamentoVendas;
+	}	
+	public void setLancamentoVendas(Set<LancamentoVendas> lancamentoVendas) {
+		this.lancamentoVendas = lancamentoVendas;
+	}
 
+	//Construtor pedindo Lancamento lancamento e usando os gets
 	public LancamentoVendasRequestDTO(LancamentoVendas lancamentoVendas) {
-		super();
-		this.id = lancamentoVendas.getId();
 		this.data = lancamentoVendas.getData();
 		this.valor = lancamentoVendas.getValor();
-		this.nomeVendedor = lancamentoVendas.getVendedorAutonomo().getNome();
+		this.vendedorAutonomo = lancamentoVendas.getVendedorAutonomo();
+		//this.nomeVendedor = lancamentoVendas.getVendedorAutonomo().getNome();
 	}
-
-	//gets sets
-	public Long getId() {
-		return id;
+	//Construtor vazio
+	public LancamentoVendasRequestDTO() {
 	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
+	//gets 
 	public LocalDate getData() {
 		return data;
 	}
@@ -54,6 +64,4 @@ public class LancamentoVendasRequestDTO {
 	public void setNomeVendedor(String nomeVendedor) {
 		this.nomeVendedor = nomeVendedor;
 	}
-	
-	
 }

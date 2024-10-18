@@ -13,12 +13,10 @@ public class LancamentoVendasResponseDTO {
 	
 	//construtor
 	public LancamentoVendasResponseDTO(LancamentoVendas lancamentoVendas) {
-		super();
 		this.data = lancamentoVendas.getData();
 		this.valor = lancamentoVendas.getValor();
 		this.nomeVendedor = lancamentoVendas.getVendedorAutonomo().getNome();
 	}
-
 	//gets sets
 	public LocalDate getData() {
 		return data;
@@ -43,7 +41,5 @@ public class LancamentoVendasResponseDTO {
 	public void setNomeVendedor(String nomeVendedor) {
 		this.nomeVendedor = nomeVendedor;
 	}
-	
-	
 }
 

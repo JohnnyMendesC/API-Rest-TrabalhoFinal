@@ -15,8 +15,22 @@ public class VendedorAutonomo extends Vendedor{
 	//atributos
 	@Column(nullable = false, length = 50)
 	@Schema(description="Salário do usuário")
-	private Double comissao;	
+	private Double comissao;
+
+	//getset
+	public Double getComissao() {
+		return comissao;
+	}
+
+	public void setComissao(Double comissao) {
+		this.comissao = comissao;
+	}
 	
+	
+	
+	
+	
+	/*
 	@JsonManagedReference //essa anotação evita loopings
 	@OneToMany(mappedBy = "vendedorAutonomo") // relação 1 para n
 	private List<LancamentoVendas> lancamentos = new ArrayList<>();
@@ -41,6 +55,7 @@ public class VendedorAutonomo extends Vendedor{
 	public void setLancamentos(List<LancamentoVendas> lancamentos) {
 		this.lancamentos = lancamentos;
 	}
+	*/
 	
 	
 }

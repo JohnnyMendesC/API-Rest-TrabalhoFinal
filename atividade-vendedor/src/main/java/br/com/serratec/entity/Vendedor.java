@@ -43,29 +43,63 @@ public abstract class Vendedor {
 	@Column(nullable = false, length = 50)
 	@Schema(description="Salário do usuário")
 	private Double salario;
-	
+
+	//getters setters
+	/**
+	 * @return the id
+	 */
 	public Long getId() {
 		return id;
 	}
+
+	/**
+	 * @param id the id to set
+	 */
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	public Double getSalario() {
-		return salario;
-	}
-	public void setSalario(Double salario) {
-		this.salario = salario;
-	}	
+
+	/**
+	 * @return the nome
+	 */
 	public String getNome() {
 		return nome;
 	}
+
+	/**
+	 * @param nome the nome to set
+	 */
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+
+	/**
+	 * @return the email
+	 */
+	public String getEmail() {
+		return email;
+	}
+
+	/**
+	 * @param email the email to set
+	 */
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	/**
+	 * @return the salario
+	 */
+	public Double getSalario() {
+		return salario;
+	}
+
+	/**
+	 * @param salario the salario to set
+	 */
+	public void setSalario(Double salario) {
+		this.salario = salario;
+	}
+
+	
 }

@@ -6,22 +6,13 @@ import java.util.Set;
 
 import br.com.serratec.entity.LancamentoVendas;
 import br.com.serratec.entity.VendedorAutonomo;
-//não implementado
-public class LancamentoVendasRequestDTO {	
+
+public class LancamentoVendasSemNomeRequestDTO {	
 	//atributos
 	private LocalDate data;
 	private Double valor;
 	private String nomeVendedor;
 	
-
-	public String getNomeVendedor() {
-		return nomeVendedor;
-	}
-
-	public void setNomeVendedor(String nomeVendedor) {
-		this.nomeVendedor = nomeVendedor;
-	}
-
 	private VendedorAutonomo vendedorAutonomo;
 	public VendedorAutonomo getVendedorAutonomo() {
 		return vendedorAutonomo;
@@ -40,14 +31,14 @@ public class LancamentoVendasRequestDTO {
 	}
 
 	//Construtor pedindo Lancamento lancamento e usando os gets
-	public LancamentoVendasRequestDTO(LancamentoVendas lancamentoVendas) {
+	public LancamentoVendasSemNomeRequestDTO(LancamentoVendas lancamentoVendas) {
 		this.data = lancamentoVendas.getData();
 		this.valor = lancamentoVendas.getValor();
-		this.vendedorAutonomo.setNome(lancamentoVendas.getVendedorAutonomo().getNome());
+		this.vendedorAutonomo = lancamentoVendas.getVendedorAutonomo();
 		//this.nomeVendedor = lancamentoVendas.getVendedorAutonomo().getNome();
 	}
 	//Construtor vazio
-	public LancamentoVendasRequestDTO() {
+	public LancamentoVendasSemNomeRequestDTO() {
 	}
 	//gets 
 	public LocalDate getData() {
@@ -64,5 +55,13 @@ public class LancamentoVendasRequestDTO {
 
 	public void setValor(Double valor) {
 		this.valor = valor;
+	}
+
+	public String getNomeVendedor() {
+		return nomeVendedor;
+	}
+
+	public void setNomeVendedor(String nomeVendedor) {
+		this.nomeVendedor = nomeVendedor;
 	}
 }

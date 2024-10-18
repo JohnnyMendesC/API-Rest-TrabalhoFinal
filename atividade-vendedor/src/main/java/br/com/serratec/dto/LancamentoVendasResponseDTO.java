@@ -11,12 +11,21 @@ public class LancamentoVendasResponseDTO {
 	private String nomeVendedor;
 	
 	
-	//construtor
+	//construtores
+	public LancamentoVendasResponseDTO() {}
+	
 	public LancamentoVendasResponseDTO(LancamentoVendas lancamentoVendas) {
 		this.data = lancamentoVendas.getData();
 		this.valor = lancamentoVendas.getValor();
 		this.nomeVendedor = lancamentoVendas.getVendedorAutonomo().getNome();
 	}
+	
+    public LancamentoVendasResponseDTO(LocalDate data, Double valor, String nomeVendedor) {
+        this.data = data;
+        this.valor = valor;
+        this.nomeVendedor = nomeVendedor;
+    }
+    
 	//gets sets
 	public LocalDate getData() {
 		return data;

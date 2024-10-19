@@ -1,5 +1,6 @@
 package br.com.serratec.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,7 +73,7 @@ public class LancamentoVendasController {
 			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso"),
 			@ApiResponse(responseCode = "404", description = "Recurso não encontrado"),
 			@ApiResponse(responseCode = "505", description = "Exceção interna da aplicação") })
-    @GetMapping("/lancamentos/{id}")
+    @GetMapping("/lancamentos/vendas/{id}")
     public ResponseEntity<LancamentoVendasResponseDTO> listarPorId(@PathVariable Long id) {
         // Busca o lançamento pelo ID
         LancamentoVendas lancamento = lancamentoVendasRepository.findById(id)
@@ -90,6 +91,39 @@ public class LancamentoVendasController {
 
         return ResponseEntity.ok(dto); // Retorna o DTO com status 200
     }
+	
+	
+	// Método para listar por ID da venda OK
+	@Operation(summary = "Busca venda por id", description = "A resposta retorna a venda efetuada pelo vendedor")
+	@ApiResponses(value = { @ApiResponse(responseCode = "200",  content = {
+			@Content(schema = @Schema(implementation = LancamentoVendas.class), mediaType = "application/json") }, description = "Lancamento de venda cadastrado com sucesso"),
+			@ApiResponse(responseCode = "401", description = "Erro de autenticação"),
+			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso"),
+			@ApiResponse(responseCode = "404", description = "Recurso não encontrado"),
+			@ApiResponse(responseCode = "505", description = "Exceção interna da aplicação") })
+	@GetMapping("/lancamentos/vendedores/{id}")
+	public ResponseEntity<List<LancamentoVendasResponseDTO>> listarPorIdVendedor(@PathVariable Long id) {
+		// Busca o lançamento pelo ID
+		List <LancamentoVendas> lancamentos = lancamentoVendasRepository.findByVendedorAutonomoId(id); // ou usar .orElseThrow() para lançar uma exceção se não encontrar
+		
+		if (lancamentos == null) {
+			return ResponseEntity.notFound().build(); // Retorna 404 se não encontrar
+		}
+		
+		// Criação do DTO de resposta
+		List <LancamentoVendasResponseDTO> dtoLista = new ArrayList<>();
+		
+		for (LancamentoVendas lancamento : lancamentos) {			
+			dtoLista.add(new LancamentoVendasResponseDTO(lancamento));
+			
+			/*LancamentoVendas dto = new LancamentoVendas();
+			dto.setData(lancamento.getData());
+			dto.setValor(lancamento.getValor());
+			dto.setNomeVendedor(lancamento.getVendedorAutonomo().getNome());*/			
+		}
+		
+		return ResponseEntity.ok(dtoLista); // Retorna o DTO com status 200
+	}
 
 	
 	//Com Paginação OK

@@ -6,10 +6,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort.Direction;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 
 import br.com.serratec.dto.LancamentoVendasRequestDTO;
@@ -84,10 +80,10 @@ public class LancamentoVendasService {
 
 		return new LancamentoVendasSemNomeResponseDTO(lancamentoVendas);
 	}
-
+	/*não é necessario, isso fica no repository
 	// listar por pagina Page<lançamento>
 	public Page<LancamentoVendas> findByVendedorAutonomo(
 			@PageableDefault(page = 0, size = 10, sort = "nome", direction = Direction.ASC) Pageable pageable) {
 		return repository.findAll(pageable);
-	}
+	}*/
 }

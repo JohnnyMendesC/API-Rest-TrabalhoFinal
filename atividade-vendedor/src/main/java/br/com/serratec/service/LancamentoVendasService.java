@@ -62,10 +62,10 @@ public class LancamentoVendasService {
 		lancamentoVendas.setData(LocalDate.now());
 		lancamentoVendas.setValor(dto.getValor());
 		lancamentoVendas.setVendedorAutonomo(dto.getVendedorAutonomo());
-		// vai como resposta com as infos sensiveis tratadas;
 		lancamentoVendas = repository.save(lancamentoVendas);
 
 		return new LancamentoVendasResponseDTO(lancamentoVendas);
+		// vai como resposta com as infos sensiveis tratadas;
 	}
 	
 	@Transactional // se der certo ele da ok, se der erro ele bloqueia igual transferencia bancaria

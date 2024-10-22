@@ -1,14 +1,11 @@
 package br.com.serratec.entity;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Produto {
@@ -18,8 +15,10 @@ public class Produto {
 	@Schema(description = "Nome do produto")
 	private String nome;
 	
-	@OneToMany(mappedBy = "id.produto")
-	private Set<CategoriaProduto> categoriaProdutos = new HashSet<>();
+	@ManyToOne
+	private Categoria categoria;
+	
+	
 
 	public Long getId() {
 		return id;

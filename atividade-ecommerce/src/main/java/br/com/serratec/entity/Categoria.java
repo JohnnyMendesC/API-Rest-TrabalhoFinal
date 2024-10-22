@@ -3,6 +3,8 @@ package br.com.serratec.entity;
 import br.com.serratec.enums.EnumCategoria;
 import br.com.serratec.enums.EnumPreparo;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -13,7 +15,10 @@ public class Categoria {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private String nome;
+	
+	@Enumerated(EnumType.STRING)
 	private EnumCategoria enumcategoria;
+	@Enumerated(EnumType.STRING)
 	private EnumPreparo enumpreparo;
 	
 //	CONSTRUTOR

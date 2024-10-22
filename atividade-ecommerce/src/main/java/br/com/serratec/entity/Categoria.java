@@ -21,41 +21,33 @@ public class Categoria {
 	@Enumerated(EnumType.STRING)
 	private EnumPreparo enumpreparo;
 	
-//	CONSTRUTOR
-//	GETTERS SETTERS
+
+//	GETTERS SETTERS	
 	public Long getId() {
 		return id;
 	}
-	
 	public void setId(Long id) {
 		this.id = id;
 	}
-
 	public String getNome() {
 		return nome;
 	}
-
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
 	public EnumCategoria getEnumcategoria() {
 		return enumcategoria;
 	}
-
 	public void setEnumcategoria(EnumCategoria enumcategoria) {
 		this.enumcategoria = enumcategoria;
 	}
-
 	public EnumPreparo getEnumpreparo() {
 		return enumpreparo;
 	}
-
 	public void setEnumpreparo(EnumPreparo enumpreparo) {
 		this.enumpreparo = enumpreparo;
 	}
 	
-//	CHAVE ESTRANGEIRA
 
 	
 }

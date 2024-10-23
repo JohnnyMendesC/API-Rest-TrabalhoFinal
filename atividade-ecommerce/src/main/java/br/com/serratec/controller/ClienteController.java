@@ -79,15 +79,9 @@ public class ClienteController {
 			@ApiResponse(responseCode = "505", description = "Exceção interna da aplicação") 
 			}
 	)
-	
-	//POST inserir cliente
 	@PostMapping
 	public ResponseEntity<Object> inserirCliente(@RequestBody ClienteRequestDTO dto) { 
 		ClienteResponseDTO dtoResponse = service.inserirCliente(dto);
 		return ResponseEntity.created(null).body(dtoResponse);
 	}
-	
-	
-	
-
 }

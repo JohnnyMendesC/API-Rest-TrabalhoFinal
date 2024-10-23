@@ -1,6 +1,9 @@
 package br.com.serratec.entity;
 
-import br.com.serratec.enums.EnumStatus;
+import java.math.BigDecimal;
+
+
+import br.com.serratec.enums.StatusPedido;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -29,11 +32,11 @@ public class Carrinho {
 	@JoinColumn(name = "id_pedido")
 	private Pedido pedido;
 	
-	private Double desconto; 	//BigDecimal é o mais preciso
+	private BigDecimal desconto; 	//BigDecimal é o mais preciso
 	private Integer valorTotal; 
-	
+
 	@Enumerated (EnumType.STRING)
-	private EnumStatus enumStatus;
+	private StatusPedido enumStatus;
 	
 	//get set
 	public Long getId() {
@@ -60,10 +63,10 @@ public class Carrinho {
 	public void setQuantidade(Integer quantidade) {
 		this.quantidade = quantidade;
 	}
-	public Double getDesconto() {
+	public BigDecimal getDesconto() {
 		return desconto;
 	}
-	public void setDesconto(Double desconto) {
+	public void setDesconto(BigDecimal desconto) {
 		this.desconto = desconto;
 	}
 	public Integer getValorTotal() {
@@ -73,6 +76,19 @@ public class Carrinho {
 		this.valorTotal = valorTotal;
 	}
 	
+	// Método para calcular o valor total
 	
-	
+    public BigDecimal calcularValorTotal() {
+        BigDecimal valorProduto = produto.getPreco(); // Assumindo que Produto tem um campo 'preco' do tipo BigDecimal
+        BigDecimal quantidadeBD = BigDecimal.valueOf(quantidade);
+        BigDecimal valorTotal = valorProduto.multiply(quantidadeBD);
+
+        if (desconto != null) {
+            valorTotal = valorTotal.subtract(desconto);
+        }
+
+        return valorTotal;
+    }
 }
+	
+

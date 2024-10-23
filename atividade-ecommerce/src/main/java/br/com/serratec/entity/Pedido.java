@@ -1,15 +1,20 @@
 package br.com.serratec.entity;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
+import br.com.serratec.enums.StatusPedido;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Pedido {
@@ -17,7 +22,8 @@ public class Pedido {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;	
 	
-	private String status;//virar o enum
+	@Enumerated
+	private StatusPedido status;//virar o enum
 	
 	@ManyToOne
 	@JoinColumn(name = "id_cliente")
@@ -25,6 +31,10 @@ public class Pedido {
 	
 	private LocalDate data; // aaaa/mm/dd
 	private LocalTime hora; // hh:mm 
+	
+	// Usando Carrinho como entidade intermediária, para detalhar a quantidade com com os produtos e descontos 
+	@OneToMany(mappedBy = "pedido")
+    private List<Carrinho> itensPedido; 
 	
 	
 	//get set
@@ -34,13 +44,7 @@ public class Pedido {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public String getStatus() {
-		return status;
-	}
-	public void setStatus(String status) {
-		this.status = status;
-	}
-	public Cliente getCliente() {
+		public Cliente getCliente() {
 		return cliente;
 	}
 	public void setCliente(Cliente cliente) {
@@ -58,6 +62,35 @@ public class Pedido {
 	public void setHora(LocalTime hora) {
 		this.hora = hora;
 	}
+	public StatusPedido getStatus() {
+		return status;
+	}
+	public void setStatus(StatusPedido status) {
+		this.status = status;
+	}
+	
+	  public List<Carrinho> getItensPedido() {
+	        return itensPedido;
+	    }
+
+	  
+	  public List<Carrinho> getItensPedido(){
+		  return itensPedido;
+	  }
+	  
+	    public void setItensPedido(List<Carrinho> itensPedido) {
+	        this.itensPedido = itensPedido;
+	    }
+
+	    // Método para calcular o total do pedido
+	    
+	    public BigDecimal calcularTotal() {
+	        return itensPedido.stream()
+	                .map(Carrinho::calcularValorTotal)
+	                .reduce(BigDecimal.ZERO, BigDecimal::add);
+	    }
+	}
 	
 	
-}
+	
+

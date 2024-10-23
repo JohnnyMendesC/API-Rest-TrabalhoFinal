@@ -15,7 +15,8 @@ public class ClienteRequestDTO {
 	private String numeroResidencia;
 	private String complemento;
 	
-//construtor cheio
+//(anotação model mapper também funciona)
+//construtor cheio 
 	public ClienteRequestDTO(Cliente cliente) {
 		this.nome = cliente.getNome();
 		this.telefone = cliente.getTelefone();

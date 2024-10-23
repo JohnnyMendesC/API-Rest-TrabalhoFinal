@@ -1,5 +1,7 @@
 package br.com.serratec.entity;
 
+import java.math.BigDecimal;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,7 +18,7 @@ public class Produto {
 	@Schema(description = "Nome do produto")
 	private String nome;
 	
-	private Double preco;
+	private BigDecimal preco;
 	
 	@ManyToOne
 	@JoinColumn(name = "id_categoria")
@@ -52,11 +54,11 @@ public class Produto {
 		this.categoria = categoria;
 	}
 
-	public Double getPreco() {
+	public BigDecimal getPreco() {
 		return preco;
 	}
 
-	public void setPreco(Double preco) {
+	public void setPreco(BigDecimal preco) {
 		this.preco = preco;
 	}
 	

@@ -7,7 +7,7 @@ public class EnderecoResponseDTO {
 	private String cep;
 	private String logradouro;
 	private String bairro;
-	private String municipio;
+	private String localidade;
 	private String uf;
 	
 	//construtores vazio e cheio
@@ -17,7 +17,7 @@ public class EnderecoResponseDTO {
 		this.cep = endereco.getCep();
 		this.logradouro = endereco.getLogradouro();
 		this.bairro = endereco.getBairro();
-		this.municipio = endereco.getMunicipio();
+		this.localidade = endereco.getLocalidade();
 		this.uf = endereco.getUf();
 	}
 	//get set
@@ -45,11 +45,11 @@ public class EnderecoResponseDTO {
 	public void setUf(String uf) {
 		this.uf = uf;
 	}
-	public String getMunicipio() {
-		return municipio;
+	public String getLocalidade() {
+		return localidade;
 	}
-	public void setMunicipio(String municipio) {
-		this.municipio = municipio;
+	public void setLocalidade(String localidade) {
+		this.localidade = localidade;
 	}
 	
 }

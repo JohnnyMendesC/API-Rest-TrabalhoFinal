@@ -28,7 +28,7 @@ public class ClienteService {
 //	REPOSITÓRIOS
 	@Autowired
 	private ClienteRepository repository;
-	
+
 	@Autowired
 	private EnderecoRepository enderecoRepository;
 
@@ -44,10 +44,10 @@ public class ClienteService {
 		}
 		return respostasDTO;
 	}
-	
-	// GET ID | LISTAR POR ID	
+
+	// GET ID | LISTAR POR ID
 	@GetMapping("{id}")
-	public ClienteResponseDTO exibirCliente(@PathVariable Long	id){
+	public ClienteResponseDTO exibirCliente(@PathVariable Long id) {
 		Optional<Cliente> cliente = repository.findById(id);
 		ClienteResponseDTO dto = new ClienteResponseDTO();
 		dto.setNome(cliente.get().getNome());
@@ -55,56 +55,55 @@ public class ClienteService {
 		dto.setTelefone(cliente.get().getTelefone());
 		return dto;
 	}
-	 
 
 	// POST | INSERIR
 	public ClienteResponseDTO inserirCliente(ClienteRequestDTO requisicaoDTO) {
 		// 1ºBUSCA EXCEPTIONS
-		Optional<Cliente>u = repository.findByEmail(requisicaoDTO.getEmail());
-		if(u.isPresent()) {//se ja existe o email então tem que throw exception
-			throw new EmailException("Email indisponível!");	
+		Optional<Cliente> u = repository.findByEmail(requisicaoDTO.getEmail());
+		if (u.isPresent()) {// se ja existe o email então tem que throw exception
+			throw new EmailException("Email indisponível!");
 		}
 		// 2ºCRIA O ATRIBUTO QUE RECEBERÁ OS DADOS
 		Cliente cliente = new Cliente();
-		
+
 		// 3ºINSTANCIA O ATRIBUTO COM OS DADOS DA REQUISIÇÃO
-		//dados do cliente
+		// dados do cliente
 		cliente.setNome(requisicaoDTO.getNome());
 		cliente.setTelefone(requisicaoDTO.getTelefone());
 		cliente.setEmail(requisicaoDTO.getEmail());
 		cliente.setCpf(requisicaoDTO.getCpf());
 		cliente.setNumeroResidencia(requisicaoDTO.getNumeroResidencia());
 		cliente.setComplemento(requisicaoDTO.getComplemento());
-		
-		//dados do endereço do cliente
+
+		// dados do endereço do cliente
 		Endereco endereco = enderecoRepository.findByCep(requisicaoDTO.getCep());
-        if (endereco != null) {
-            cliente.setEndereco(endereco);
-        } else {
-            RestTemplate rs = new RestTemplate();
-            String uri = "https://viacep.com.br/ws/" + requisicaoDTO.getCep() + "/json/";
-            Optional<Endereco> enderecoViaCep = Optional.ofNullable(rs.getForObject(uri, Endereco.class));
-            if (enderecoViaCep.get().getCep() != null) {
-                String cepSemTraco = enderecoViaCep.get().getCep().replaceAll("-", "");
-                enderecoViaCep.get().setCep(cepSemTraco);
+		if (endereco != null) {
+			cliente.setEndereco(endereco);
+		} else {
+			RestTemplate rs = new RestTemplate();
+			String uri = "https://viacep.com.br/ws/" + requisicaoDTO.getCep() + "/json/";
+			Optional<Endereco> enderecoViaCep = Optional.ofNullable(rs.getForObject(uri, Endereco.class));
+			if (enderecoViaCep.get().getCep() != null) {
+				String cepSemTraco = enderecoViaCep.get().getCep().replaceAll("-", "");
+				enderecoViaCep.get().setCep(cepSemTraco);
 
-                endereco = new Endereco();
-                endereco.setCep(enderecoViaCep.get().getCep());
-                endereco.setBairro(enderecoViaCep.get().getBairro());
-                endereco.setLocalidade(enderecoViaCep.get().getLocalidade());
-                endereco.setLogradouro(enderecoViaCep.get().getLogradouro());
-                endereco.setUf(enderecoViaCep.get().getUf());
-                enderecoRepository.save(endereco);
-                cliente.setEndereco(endereco);
-            } else {
-                throw new HttpClientErrorException(HttpStatus.NOT_FOUND);
-            }
+				endereco = new Endereco();
+				endereco.setCep(enderecoViaCep.get().getCep());
+				endereco.setBairro(enderecoViaCep.get().getBairro());
+				endereco.setLocalidade(enderecoViaCep.get().getLocalidade());
+				endereco.setLogradouro(enderecoViaCep.get().getLogradouro());
+				endereco.setUf(enderecoViaCep.get().getUf());
+				enderecoRepository.save(endereco);
+				cliente.setEndereco(endereco);
+			} else {
+				throw new HttpClientErrorException(HttpStatus.NOT_FOUND);
+			}
 
-        }
+		}
 
-        // 4ºSALVA NO BANCO COM TODOS OS DADOS INSERIDOS
-        cliente = repository.save(cliente);
-	
+		// 4ºSALVA NO BANCO COM TODOS OS DADOS INSERIDOS
+		cliente = repository.save(cliente);
+
 		// 5ºRETORNA NO FRONT OS DADOS FILTRADOS COM O CONSTRUTOR DE responseDTO
 		return new ClienteResponseDTO(cliente);
 	}
@@ -116,18 +115,63 @@ public class ClienteService {
 	 */
 
 // PUT | ALTERAR	
-	 @PutMapping("{id}") public ResponseEntity<Cliente> alterar
-	 (@PathVariable Long id, @RequestBody Cliente clienteModificado) {
-		 return null;
-	 }
-	 //encontrar
-	 //valida se existe, puxa os dados para receber no optional
-	 //lembrar do set id
-	 
+	@PutMapping("{id}")
+	public ClienteResponseDTO atualizarCliente(@PathVariable Long id, @RequestBody ClienteRequestDTO clienteModificado) {
+//1º Checa se existe o ID na lista:
+		Optional<Cliente> u = repository.findById(id);
+		if (u.isEmpty()) {
+			throw new EmailException("Id não encontrado na lista de cadastros.");
+		}
+//2º Instancia o cliente que vai receber os dados do JSON pelo clienteModificado
+		Cliente cliente = new Cliente();
+
+// dados do cliente
+		cliente.setId(id);
+		cliente.setNome(clienteModificado.getNome());
+		cliente.setTelefone(clienteModificado.getTelefone());
+		cliente.setEmail(clienteModificado.getEmail());
+		cliente.setCpf(clienteModificado.getCpf());
+		cliente.setNumeroResidencia(clienteModificado.getNumeroResidencia());
+		cliente.setComplemento(clienteModificado.getComplemento());
+
+// dados do endereço do cliente
+		Endereco endereco = enderecoRepository.findByCep(clienteModificado.getCep());
+		if (endereco != null) {
+			cliente.setEndereco(endereco);
+		} else {
+			RestTemplate rs = new RestTemplate();
+			String uri = "https://viacep.com.br/ws/" + clienteModificado.getCep() + "/json/";
+			Optional<Endereco> enderecoViaCep = Optional.ofNullable(rs.getForObject(uri, Endereco.class));
+			if (enderecoViaCep.get().getCep() != null) {
+				String cepSemTraco = enderecoViaCep.get().getCep().replaceAll("-", "");
+				enderecoViaCep.get().setCep(cepSemTraco);
+
+				endereco = new Endereco();
+				endereco.setCep(enderecoViaCep.get().getCep());
+				endereco.setBairro(enderecoViaCep.get().getBairro());
+				endereco.setLocalidade(enderecoViaCep.get().getLocalidade());
+				endereco.setLogradouro(enderecoViaCep.get().getLogradouro());
+				endereco.setUf(enderecoViaCep.get().getUf());
+				enderecoRepository.save(endereco);
+				cliente.setEndereco(endereco);
+			} else {
+				throw new HttpClientErrorException(HttpStatus.NOT_FOUND);
+			}
+		}
+// 3º SALVA NO BANCO COM TODOS OS DADOS INSERIDOS
+		cliente = repository.save(cliente);
+
+// 4º RETORNA NO FRONT OS DADOS FILTRADOS COM O CONSTRUTOR DE responseDTO
+		return new ClienteResponseDTO(cliente);
+	}
+}
+
+// encontrar
+// valida se existe, puxa os dados para receber no optional
+// lembrar do set id
 
 // DELETE | DELETAR
-	/*
-	 * @DeleteMapping("{id}") public ResponseEntity<Void> apagarItem(@PathVariable
-	 * Long id)
-	 */
-}
+/*
+ * @DeleteMapping("{id}") public ResponseEntity<Void> apagarItem(@PathVariable
+ * Long id)
+ */

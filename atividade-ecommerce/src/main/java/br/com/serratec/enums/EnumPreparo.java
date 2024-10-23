@@ -16,5 +16,4 @@ public enum EnumPreparo {
 		}
 		throw new EnumException("Preparo inválido");
 	}
-
 }

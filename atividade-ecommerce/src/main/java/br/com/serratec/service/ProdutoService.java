@@ -5,13 +5,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import br.com.serratec.dto.CategoriaResponseDTO;
 import br.com.serratec.dto.ProdutoRequestDTO;
 import br.com.serratec.dto.ProdutoResponseDTO;
-import br.com.serratec.entity.Categoria;
 import br.com.serratec.entity.Produto;
-import br.com.serratec.repository.CategoriaRepository;
 import br.com.serratec.repository.ProdutoRepository;
 
 @Service

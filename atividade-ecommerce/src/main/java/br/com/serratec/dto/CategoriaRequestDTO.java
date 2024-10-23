@@ -1,13 +1,11 @@
 package br.com.serratec.dto;
 
-import br.com.serratec.enums.EnumCategoria;
 import br.com.serratec.enums.EnumPreparo;
 
 //Requisição | Pergunta
 //DTO = Objeto de transferencia de dado | Data transfer object
 public class CategoriaRequestDTO {
 	private String nome;
-	private EnumCategoria enumcategoria;
 	private EnumPreparo enumpreparo;
 	
 	

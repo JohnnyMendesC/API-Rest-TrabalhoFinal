@@ -8,7 +8,7 @@ public enum EnumPreparo {
 	QUENTE, AMBIENTE, GELADA;
 	
 	@JsonCreator
-	public static EnumPreparo verificar(Integer valor) {
+	public static EnumPreparo verificar(String valor) {
 		for (EnumPreparo c : EnumPreparo.values()) {
 			if (c.name().equals(valor)) {
 				return c;
@@ -16,4 +16,5 @@ public enum EnumPreparo {
 		}
 		throw new EnumException("Preparo inválido");
 	}
+	
 }

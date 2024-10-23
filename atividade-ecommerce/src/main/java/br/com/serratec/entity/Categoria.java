@@ -1,6 +1,5 @@
 package br.com.serratec.entity;
 
-import br.com.serratec.enums.EnumCategoria;
 import br.com.serratec.enums.EnumPreparo;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -17,8 +16,6 @@ public class Categoria {
 	private String nome;
 	
 	@Enumerated(EnumType.STRING)
-	private EnumCategoria enumcategoria;
-	@Enumerated(EnumType.STRING)
 	private EnumPreparo enumpreparo;
 	
 
@@ -34,12 +31,6 @@ public class Categoria {
 	}
 	public void setNome(String nome) {
 		this.nome = nome;
-	}
-	public EnumCategoria getEnumcategoria() {
-		return enumcategoria;
-	}
-	public void setEnumcategoria(EnumCategoria enumcategoria) {
-		this.enumcategoria = enumcategoria;
 	}
 	public EnumPreparo getEnumpreparo() {
 		return enumpreparo;

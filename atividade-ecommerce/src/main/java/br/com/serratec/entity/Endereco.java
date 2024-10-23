@@ -20,7 +20,7 @@ public class Endereco {
 	@Schema(description = "Comunidade ou região dentro de uma cidade ou município")
 	private String bairro;
 	@Schema(description = "Espaço territorial político dentro de um estado ou unidade federativa")
-	private String municipio;
+	private String localidade;
 	@Schema(description = "Refere-se aos 26 estados brasileiros, mais o Distrito Federal")
 	private String uf;
 	
@@ -49,11 +49,11 @@ public class Endereco {
 	public void setBairro(String bairro) {
 		this.bairro = bairro;
 	}
-	public String getMunicipio() {
-		return municipio;
+	public String getLocalidade() {
+		return localidade;
 	}
-	public void setMunicipio(String municipio) {
-		this.municipio = municipio;
+	public void setLocalidade(String localidade) {
+		this.localidade = localidade;
 	}
 	public String getUf() {
 		return uf;

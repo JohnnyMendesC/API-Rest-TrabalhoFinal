@@ -1,7 +1,6 @@
 package br.com.serratec.entity;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -28,7 +27,7 @@ public class Cliente {
 	private String cpf;
 
 //da localidade:
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne
 	@JoinColumn(name = "id_endereco")
 	@Schema(description = "Conjunto de informações que define o endereço de usuário")
 	private Endereco endereco;

@@ -6,7 +6,6 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import br.com.serratec.config.MailConfig;
 import br.com.serratec.dto.ClienteRequestDTO;
 import br.com.serratec.dto.ClienteResponseDTO;
 import br.com.serratec.entity.Cliente;
@@ -29,8 +29,11 @@ public class ClienteService {
 	@Autowired
 	private ClienteRepository repository;
 
-	@Autowired
+	@Autowired 
 	private EnderecoRepository enderecoRepository;
+	
+	@Autowired
+	private MailConfig mailConfig;
 
 //	REGRAS DE NEGÓCIO
 	// GET ALL | LISTAR TODOS
@@ -103,6 +106,11 @@ public class ClienteService {
 
 		// 4ºSALVA NO BANCO COM TODOS OS DADOS INSERIDOS
 		cliente = repository.save(cliente);
+		
+		//MailConfig mailConfig = new MailConfig();
+		//para enviar o email de confirmação
+           mailConfig.sendEmail(cliente.getEmail(), "Confirmação de cadastro", cliente.toString() //nome
+);
 
 		// 5ºRETORNA NO FRONT OS DADOS FILTRADOS COM O CONSTRUTOR DE responseDTO
 		return new ClienteResponseDTO(cliente);

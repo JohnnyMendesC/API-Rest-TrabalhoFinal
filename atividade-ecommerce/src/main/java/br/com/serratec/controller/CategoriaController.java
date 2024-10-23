@@ -21,21 +21,15 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/categorias")
 public class CategoriaController {
-	//Controller faz o meio de campo entre o Serviço e o FrontEnd
+	
 	@Autowired
 	private CategoriaRepository repository;
 
 	@PostMapping
-	@ResponseStatus(HttpStatus.CREATED)
-	public Categoria inserir(@Valid @RequestBody Categoria c) {
-		return repository.save(c);
+	public ResponseEntity<Categoria> inserir(@Valid @RequestBody Categoria c) {
+		Categoria novaCategoria = repository.save(c);
+			return ResponseEntity.status(HttpStatus.CREATED).body(novaCategoria);
 	}
-
-	/*@PostMapping("/varios")
-	@ResponseStatus(HttpStatus.CREATED)
-	public List<Categoria> inserirVarios(@RequestBody List<Categoria> categorias) {
-		return repository.saveAll(categorias);
-	}*/
 
 	@GetMapping
 	public List<Categoria> listar() {

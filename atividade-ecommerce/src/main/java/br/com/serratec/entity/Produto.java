@@ -2,8 +2,11 @@ package br.com.serratec.entity;
 
 import java.math.BigDecimal;
 
+import br.com.serratec.enums.EnumPreparo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -23,12 +26,14 @@ public class Produto {
 	@ManyToOne
 	@JoinColumn(name = "id_categoria")
 	private Categoria categoria;
+	
 	/** javadoc
 	 * @param
 	 * @throws
 	 * @return
 	 */
 
+		
 	//get set
 	public Long getId() {
 		return id;

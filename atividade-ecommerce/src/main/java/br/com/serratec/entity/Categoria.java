@@ -15,8 +15,8 @@ public class Categoria {
 	private Long id;
 	private String nome;
 	
-	//@Enumerated(EnumType.STRING)
-	//private EnumPreparo enumpreparo;
+	@Enumerated(EnumType.STRING)
+	private EnumPreparo enumpreparo;
 	
 
 	
@@ -32,12 +32,13 @@ public class Categoria {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	/*public EnumPreparo getEnumpreparo() {
+	
+	public EnumPreparo getEnumpreparo() {
 		return enumpreparo;
 	}
 	public void setEnumpreparo(EnumPreparo enumpreparo) {
 		this.enumpreparo = enumpreparo;
-	}*/
+	}
 	
 
 	

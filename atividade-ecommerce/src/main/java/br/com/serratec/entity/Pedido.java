@@ -34,7 +34,7 @@ public class Pedido {
 	
 	// Usando Carrinho como entidade intermediária, para detalhar a quantidade com com os produtos e descontos 
 	@OneToMany(mappedBy = "pedido")
-    private List<Carrinho> itensPedido; 
+    private List<Carrinho> carrinho; 
 	
 	
 	//get set
@@ -69,23 +69,17 @@ public class Pedido {
 		this.status = status;
 	}
 	
-	  public List<Carrinho> getItensPedido() {
-	        return itensPedido;
-	    }
-
-	  
-	  public List<Carrinho> getItensPedido(){
-		  return itensPedido;
-	  }
-	  
-	    public void setItensPedido(List<Carrinho> itensPedido) {
-	        this.itensPedido = itensPedido;
-	    }
-
+	
 	    // Método para calcular o total do pedido
 	    
-	    public BigDecimal calcularTotal() {
-	        return itensPedido.stream()
+	    public List<Carrinho> getCarrinho() {
+		return carrinho;
+	}
+	public void setCarrinho(List<Carrinho> carrinho) {
+		this.carrinho = carrinho;
+	}
+		public BigDecimal calcularTotal() {
+	        return carrinho.stream()
 	                .map(Carrinho::calcularValorTotal)
 	                .reduce(BigDecimal.ZERO, BigDecimal::add);
 	    }

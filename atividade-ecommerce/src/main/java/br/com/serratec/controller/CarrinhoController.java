@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -79,6 +80,12 @@ public class CarrinhoController {
 	public ResponseEntity<CarrinhoResponseDTO> inserirCarrinho(@RequestBody CarrinhoRequestDTO dto, @PathVariable Long idPedido, @PathVariable Long idProduto) {
 		CarrinhoResponseDTO dtoResponse = service.inserirCarrinho(dto, idPedido, idProduto);
 		return ResponseEntity.ok(dtoResponse);
+	}
+	
+	@PutMapping("/{id}")
+	public ResponseEntity<Object> atualizarCarrinho(@RequestBody CarrinhoRequestDTO carrinhoDTO, @PathVariable Long id) {
+		CarrinhoResponseDTO carrinhoAtualizado = service.alterarCarrinho(carrinhoDTO, id);
+		return ResponseEntity.ok(carrinhoAtualizado);
 	}
 /*
 	@PutMapping("/{id}")

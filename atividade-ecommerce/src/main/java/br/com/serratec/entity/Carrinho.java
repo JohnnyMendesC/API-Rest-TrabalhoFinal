@@ -32,15 +32,21 @@ public class Carrinho {
 	@JoinColumn(name = "id_pedido")
 	private Pedido pedido;
 	
-	private BigDecimal desconto; 	//BigDecimal é o mais preciso
-	private Integer valorTotal; 
+	private Double desconto; 	//BigDecimal é o mais preciso
+	private Double valorTotal; 
 
 //	@Enumerated (EnumType.STRING)
 //	private StatusPedido enumStatus;
 	
-	//get set
+	//get set	
 	public Long getId() {
 		return id;
+	}
+	public Double getDesconto() {
+		return desconto;
+	}
+	public void setDesconto(Double desconto) {
+		this.desconto = desconto;
 	}
 	public void setId(Long id) {
 		this.id = id;
@@ -63,21 +69,16 @@ public class Carrinho {
 	public void setQuantidade(Integer quantidade) {
 		this.quantidade = quantidade;
 	}
-	public BigDecimal getDesconto() {
-		return desconto;
-	}
-	public void setDesconto(BigDecimal desconto) {
-		this.desconto = desconto;
-	}
-	public Integer getValorTotal() {
+
+	public Double getValorTotal() {
 		return valorTotal;
 	}
-	public void setValorTotal(Integer valorTotal) {
+	public void setValorTotal(Double valorTotal) {
 		this.valorTotal = valorTotal;
 	}
 	
 	// Método para calcular o valor total
-	
+	/*
     public BigDecimal calcularValorTotal() {
         BigDecimal valorProduto = produto.getPreco(); // Assumindo que Produto tem um campo 'preco' do tipo BigDecimal
         BigDecimal quantidadeBD = BigDecimal.valueOf(quantidade);
@@ -88,7 +89,7 @@ public class Carrinho {
         }
 
         return valorTotal;
-    }
+    }*/
 }
 	
 

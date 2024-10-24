@@ -1,7 +1,5 @@
 package br.com.serratec.dto;
 
-import java.math.BigDecimal;
-
 import br.com.serratec.entity.Carrinho;
 import br.com.serratec.entity.Pedido;
 import br.com.serratec.entity.Produto;
@@ -16,8 +14,8 @@ public class CarrinhoRequestDTO {
 
 	private Pedido pedido;
 
-	private BigDecimal desconto; // BigDecimal é o mais preciso
-	private Integer valorTotal;
+	private Double desconto; // BigDecimal é o mais preciso
+	private Double valorTotal;
 
 	// (anotação model mapper também funciona)
 	// construtor cheio
@@ -58,19 +56,19 @@ public class CarrinhoRequestDTO {
 		this.pedido = pedido;
 	}
 
-	public BigDecimal getDesconto() {
+	public Double getDesconto() {
 		return desconto;
 	}
 
-	public void setDesconto(BigDecimal desconto) {
+	public void setDesconto(Double desconto) {
 		this.desconto = desconto;
 	}
 
-	public Integer getValorTotal() {
+	public Double getValorTotal() {
 		return valorTotal;
 	}
 
-	public void setValorTotal(Integer valorTotal) {
+	public void setValorTotal(Double valorTotal) {
 		this.valorTotal = valorTotal;
 	}
 

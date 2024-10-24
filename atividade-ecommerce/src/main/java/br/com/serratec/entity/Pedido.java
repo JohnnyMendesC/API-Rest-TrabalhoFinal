@@ -80,11 +80,12 @@ public class Pedido {
 	public void setCarrinho(List<Carrinho> carrinho) {
 		this.carrinho = carrinho;
 	}
+	/*
 		public BigDecimal calcularTotal() {
 	        return carrinho.stream()
 	                .map(Carrinho::calcularValorTotal)
 	                .reduce(BigDecimal.ZERO, BigDecimal::add);
-	    }
+	    }*/
 	}
 	
 	

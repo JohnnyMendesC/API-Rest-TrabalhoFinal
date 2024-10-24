@@ -15,8 +15,8 @@ public class CarrinhoResponseDTO {
 
 			private Pedido pedido;
 
-			private BigDecimal desconto; // BigDecimal é o mais preciso
-			private Integer valorTotal;
+			private Double desconto; // BigDecimal é o mais preciso
+			private Double valorTotal;
 
 			// (anotação model mapper também funciona)
 			// construtor cheio
@@ -57,19 +57,19 @@ public class CarrinhoResponseDTO {
 				this.pedido = pedido;
 			}
 
-			public BigDecimal getDesconto() {
+			public Double getDesconto() {
 				return desconto;
 			}
 
-			public void setDesconto(BigDecimal desconto) {
+			public void setDesconto(Double desconto) {
 				this.desconto = desconto;
 			}
 
-			public Integer getValorTotal() {
+			public Double getValorTotal() {
 				return valorTotal;
 			}
 
-			public void setValorTotal(Integer valorTotal) {
+			public void setValorTotal(Double valorTotal) {
 				this.valorTotal = valorTotal;
 			}
 

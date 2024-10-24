@@ -1,12 +1,7 @@
 package br.com.serratec.entity;
 
-import java.math.BigDecimal;
-
-import br.com.serratec.enums.EnumPreparo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -21,7 +16,7 @@ public class Produto {
 	@Schema(description = "Nome do produto")
 	private String nome;
 	
-	private BigDecimal preco;
+	private Double preco;
 	
 	@ManyToOne
 	@JoinColumn(name = "id_categoria")
@@ -59,11 +54,11 @@ public class Produto {
 		this.categoria = categoria;
 	}
 
-	public BigDecimal getPreco() {
+	public Double getPreco() {
 		return preco;
 	}
 
-	public void setPreco(BigDecimal preco) {
+	public void setPreco(Double preco) {
 		this.preco = preco;
 	}
 	

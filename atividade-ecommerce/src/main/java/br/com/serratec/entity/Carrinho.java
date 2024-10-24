@@ -35,8 +35,8 @@ public class Carrinho {
 	private BigDecimal desconto; 	//BigDecimal é o mais preciso
 	private Integer valorTotal; 
 
-	@Enumerated (EnumType.STRING)
-	private StatusPedido enumStatus;
+//	@Enumerated (EnumType.STRING)
+//	private StatusPedido enumStatus;
 	
 	//get set
 	public Long getId() {

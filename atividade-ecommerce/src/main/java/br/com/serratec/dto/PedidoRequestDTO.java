@@ -1,7 +1,6 @@
 package br.com.serratec.dto;
 
 import br.com.serratec.entity.Pedido;
-import br.com.serratec.enums.StatusPedido;
 
 
 public class PedidoRequestDTO {
@@ -21,7 +20,7 @@ public class PedidoRequestDTO {
 	private String complemento;
 	//private LocalDate data;
 	//private LocalTime hora;
-	private StatusPedido status;
+	private String status;
 	private Long clienteId;
 	
 	// (anotação model mapper também funciona)
@@ -37,7 +36,7 @@ public class PedidoRequestDTO {
 	this.complemento = pedido.getCliente().getComplemento();
 	//this.data = pedido.getData();
 	//this.hora = pedido.getHora();
-	this.status = pedido.getStatus();
+	this.status = pedido.getStatus().toString();
 	this.clienteId = pedido.getCliente().getId();
 	}
 
@@ -52,9 +51,14 @@ public class PedidoRequestDTO {
 
 
 
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	
-	
-	
+
+	public String getStatus() {
+		return status;
+	}
 
 	// getset
 /*
@@ -130,13 +134,13 @@ public class PedidoRequestDTO {
 		this.complemento = complemento;
 	}
 
-	public StatusPedido getStatus() {
+/*	public StatusPedido getStatus() {
 		return status;
 	}
 
 	public void setStatus(StatusPedido status) {
 		this.status = status;
-	}
+	}*/
 
 
 	public Long getId() {

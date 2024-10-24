@@ -93,9 +93,9 @@ public class PedidoService {
 		// pedido.setData(pedidoModificado.getData());
 		// pedido.setHora(pedidoModificado.getHora());
 
-		if (pedidoModificado.getStatus() != null) {
-			pedido.setStatus(pedidoModificado.getStatus());
-		}
+		StatusPedido status = StatusPedido.valueOf(pedidoModificado.getStatus().toUpperCase());
+		
+		pedido.setStatus(status);
 
 		pedido = pedidoRepository.save(pedido);
 

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import br.com.serratec.dto.PedidoRequestDTO;
 import br.com.serratec.dto.PedidoResponseDTO;
+import br.com.serratec.entity.Cliente;
 import br.com.serratec.entity.Pedido;
 import br.com.serratec.enums.StatusPedido;
 import br.com.serratec.repository.ClienteRepository;
@@ -19,13 +20,11 @@ import br.com.serratec.repository.PedidoRepository;
 @Service
 public class PedidoService {
 
-    @Autowired
-    private PedidoRepository pedidoRepository;
+	@Autowired
+	private PedidoRepository pedidoRepository;
 
-    @Autowired
-    private ClienteRepository clienteRepository;
-
-       
+	@Autowired
+	private ClienteRepository clienteRepository;
 
 	public List<PedidoResponseDTO> listarTodosPedido() {
 
@@ -37,7 +36,7 @@ public class PedidoService {
 		}
 		return respostasDTO;
 	}
-	
+
 	// GET ID | LISTAR POR ID
 	@GetMapping("{id}")
 	public PedidoResponseDTO exibirPedido(@PathVariable Long id) {
@@ -49,47 +48,57 @@ public class PedidoService {
 		dto.setStatus(pedido.get().getStatus());
 		return dto;
 	}
-    
-    // Inserir um novo pedido (POST)
-    public PedidoResponseDTO inserirPedido(PedidoRequestDTO requisicaoDTO) {
-        var pedido = new Pedido();
-        // Definir o cliente do pedido (você pode ajustar conforme sua lógica de cliente)
-        pedido.setCliente(clienteRepository.findById(requisicaoDTO.getClienteId()).orElseThrow());
 
-       // pedido.setData(requisicaoDTO.getData());
-       // pedido.setHora(requisicaoDTO.getHora());
+	// Inserir um novo pedido (POST)
+	public PedidoResponseDTO inserirPedido(PedidoRequestDTO requisicaoDTO, Long idCliente) {
+		// Definir o cliente do pedido (você pode ajustar conforme sua lógica de
+		// cliente)
+		var pedido = new Pedido();
+		Optional<Cliente> cliente = clienteRepository.findById(idCliente);
 
-        if (requisicaoDTO.getStatus() != null) {
-            pedido.setStatus(requisicaoDTO.getStatus());
-        } else {
-            pedido.setStatus(StatusPedido.REALIZADO); // Status padrão
-        }
-        pedido = pedidoRepository.save(pedido);
-       
-        return new PedidoResponseDTO(pedido);
-    }
+		// pedido.setData(requisicaoDTO.getData());
+		// pedido.setHora(requisicaoDTO.getHora());
 
-    // Atualizar um pedido existente (PUT)
-    public PedidoResponseDTO atualizarPedido(Long id, PedidoRequestDTO pedidoModificado) {
-        Optional<Pedido> pedidoOptional = pedidoRepository.findById(id);
-        if (pedidoOptional.isEmpty()) {
-            throw new RuntimeException("Pedido não encontrado.");
-        }
+		pedido.setStatus(StatusPedido.PROCESSANDO); // Status padrão
 
-        Pedido pedido = pedidoOptional.get();
-        // Atualizar data e hora
-        //pedido.setData(pedidoModificado.getData());
-        //pedido.setHora(pedidoModificado.getHora());
+		// adiciona as informações do cliente
+		pedido.setCliente(cliente.get());
 
-       
-        if (pedidoModificado.getStatus() != null) {
-            pedido.setStatus(pedidoModificado.getStatus());
-        }
+//    	pedido.getCliente().getTelefone();
+//    	pedido.getCliente().getEmail();
+//    	pedido.getCliente().getCpf();
+//    	pedido.getCliente().getEndereco().getCep();
+//    	pedido.getCliente().getNumeroResidencia();
+//    	pedido.getCliente().getComplemento();
+//
+//    	pedido.getStatus();
+//    	pedido.getCliente().getId();
 
-        
-        pedido = pedidoRepository.save(pedido);
+		// salva
+		pedido = pedidoRepository.save(pedido);
 
-        
-        return new PedidoResponseDTO(pedido);
-    }
+		// retorna
+		return new PedidoResponseDTO(pedido);
+	}
+
+	// Atualizar um pedido existente (PUT)
+	public PedidoResponseDTO atualizarPedido(Long id, PedidoRequestDTO pedidoModificado) {
+		Optional<Pedido> pedidoOptional = pedidoRepository.findById(id);
+		if (pedidoOptional.isEmpty()) {
+			throw new RuntimeException("Pedido não encontrado.");
+		}
+
+		Pedido pedido = pedidoOptional.get();
+		// Atualizar data e hora
+		// pedido.setData(pedidoModificado.getData());
+		// pedido.setHora(pedidoModificado.getHora());
+
+		if (pedidoModificado.getStatus() != null) {
+			pedido.setStatus(pedidoModificado.getStatus());
+		}
+
+		pedido = pedidoRepository.save(pedido);
+
+		return new PedidoResponseDTO(pedido);
+	}
 }

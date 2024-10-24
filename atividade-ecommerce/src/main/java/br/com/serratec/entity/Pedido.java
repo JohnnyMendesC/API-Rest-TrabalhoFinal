@@ -22,6 +22,13 @@ public class Pedido {
 	@Enumerated
 	private StatusPedido status;//virar o enum
 	
+	public StatusPedido getStatus() {
+		return status;
+	}
+	public void setStatus(StatusPedido status) {
+		this.status = status;
+	}
+	
 	@ManyToOne
 	@JoinColumn(name = "id_cliente")
 	private Cliente cliente;
@@ -61,12 +68,7 @@ public class Pedido {
 		this.hora = hora;
 	}
 	*/
-	public StatusPedido getStatus() {
-		return status;
-	}
-	public void setStatus(StatusPedido status) {
-		this.status = status;
-	}
+
 	
 	
 	    // Método para calcular o total do pedido

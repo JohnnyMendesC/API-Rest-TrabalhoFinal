@@ -5,7 +5,8 @@ import br.com.serratec.enums.StatusPedido;
 
 
 public class PedidoRequestDTO {
-
+	//o construtor do swagger se baseia nos getters e setters daqui
+	
 	// 7 ATRIBUTOS
 	// Nome, Telefone, Email, Cpf, Endereco, NumeroResidencia, Complemento
 	// *id não precisa pois gera automaticamente

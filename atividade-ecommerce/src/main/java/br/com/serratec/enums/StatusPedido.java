@@ -15,11 +15,10 @@ public enum StatusPedido {
 	    @JsonCreator
 		public static StatusPedido verificar(String valor) {
 			for (StatusPedido s : StatusPedido.values()) {
-				if (s.name().equals(valor)) {
+				if (s.name().equalsIgnoreCase(valor)) {
 					return s;
 				}
 			}
 			throw new EnumException("Status inválido");
-		}
-		
+		}		
 	}

@@ -78,10 +78,10 @@ public class PedidoController {
 			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso"),
 			@ApiResponse(responseCode = "404", description = "Recurso não encontrado"),
 			@ApiResponse(responseCode = "505", description = "Exceção interna da aplicação") })
-	@PostMapping
-	public ResponseEntity<Object> inserirPedido(@RequestBody PedidoRequestDTO dto) {
-		PedidoResponseDTO dtoResponse = service.inserirPedido(dto);
-		return ResponseEntity.created(null).body(dtoResponse);
+	@PostMapping("/{idCliente}")
+	public ResponseEntity<PedidoResponseDTO> inserirPedido(@RequestBody PedidoRequestDTO dto, @PathVariable Long idCliente) {
+		PedidoResponseDTO dtoResponse = service.inserirPedido(dto, idCliente);
+		return ResponseEntity.ok(dtoResponse);
 	}
 
 	@PutMapping("/{id}")

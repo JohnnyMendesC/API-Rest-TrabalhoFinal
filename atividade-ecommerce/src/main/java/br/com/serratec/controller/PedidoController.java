@@ -1,7 +1,5 @@
 package br.com.serratec.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,13 +10,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.serratec.dto.ClienteRequestDTO;
-import br.com.serratec.dto.ClienteResponseDTO;
 import br.com.serratec.dto.PedidoRequestDTO;
 import br.com.serratec.dto.PedidoResponseDTO;
 import br.com.serratec.entity.Cliente;
 import br.com.serratec.entity.Pedido;
-import br.com.serratec.service.ClienteService;
 import br.com.serratec.service.PedidoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -32,67 +27,66 @@ public class PedidoController {
 //Origem service:
 	@Autowired
 	private PedidoService service;
-	
+
 //Metodos GET SET POST DELETE chamando o service
-	
-	//GET todos
+
+	// GET todos
 	@Operation(// documentação do get
 			summary = "Listar todos pedidos", description = "Retorna os dados dos pedidos")
-	@ApiResponses(value={//respostas das requisições
-			@ApiResponse(responseCode = "200", 
-			content = {@Content(schema = @Schema(implementation = Pedido.class), mediaType = "application/json")},
-			description = "Retorna todos os pedidos"),
+	@ApiResponses(value = { // respostas das requisições
+			@ApiResponse(responseCode = "200", content = {
+					@Content(schema = @Schema(implementation = Pedido.class), mediaType = "application/json") }, description = "Retorna todos os pedidos"),
 			@ApiResponse(responseCode = "401", description = "Erro de autenticação"),
 			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso"),
 			@ApiResponse(responseCode = "404", description = "Recurso não encontrado"),
-			@ApiResponse(responseCode = "505", description = "Exceção interna da aplicação") 
-			}
-	)
-	@GetMapping
-	public ResponseEntity<List<PedidoResponseDTO>> listarTodos() {
-		return ResponseEntity.ok(service.listarTodosPedido());
-	}
-	
-	//GET por id
-	@Operation(// documentação do get
-			summary = "Listar pedido por id", description = "Retorna os dados do pedido")
-	@ApiResponses(value={//respostas das requisições
-			@ApiResponse(responseCode = "200", 
-			content = {@Content(schema = @Schema(implementation = Pedido.class), mediaType = "application/json")},
-			description = "Retorna o pedido solicitado"),
-			@ApiResponse(responseCode = "401", description = "Erro de autenticação"),
-			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso"),
-			@ApiResponse(responseCode = "404", description = "Recurso não encontrado"),
-			@ApiResponse(responseCode = "505", description = "Exceção interna da aplicação") 
-			}
-	)
+			@ApiResponse(responseCode = "505", description = "Exceção interna da aplicação") })
 	@GetMapping("{id}")
-	public ResponseEntity<ClienteResponseDTO> buscarId(@PathVariable Long id){
+	public ResponseEntity<PedidoResponseDTO> buscarId(@PathVariable Long id){
 		return ResponseEntity.ok(service.exibirPedido(id));
 	}
-	
-	
-	//POST inserir pedido
+
+	// GET por id
+	/*
+	 * @Operation(// documentação do get summary = "Listar pedido por id",
+	 * description = "Retorna os dados do pedido")
+	 * 
+	 * @ApiResponses(value={//respostas das requisições
+	 * 
+	 * @ApiResponse(responseCode = "200", content = {@Content(schema
+	 * = @Schema(implementation = Pedido.class), mediaType = "application/json")},
+	 * description = "Retorna o pedido solicitado"),
+	 * 
+	 * @ApiResponse(responseCode = "401", description = "Erro de autenticação"),
+	 * 
+	 * @ApiResponse(responseCode = "403", description =
+	 * "Não há permissão para acessar o recurso"),
+	 * 
+	 * @ApiResponse(responseCode = "404", description = "Recurso não encontrado"),
+	 * 
+	 * @ApiResponse(responseCode = "505", description =
+	 * "Exceção interna da aplicação") } )
+	 * 
+	 * @GetMapping("{id}") public ResponseEntity<PedidoResponseDTO>
+	 * buscarId(@PathVariable Long id){ return ResponseEntity.ok(service.); }
+	 */
+
+	// POST inserir pedido
 	@Operation(summary = "Insere um novo pedido", description = "A resposta retorna o nome, email e telefone sem expor o id ou o cpf.")
-	@ApiResponses(value = { 
-			@ApiResponse(responseCode = "201", 
-			content = {@Content(schema = @Schema(implementation = Cliente.class), mediaType = "application/json")},
-			description = "Cliente cadastrado com sucesso"),
+	@ApiResponses(value = { @ApiResponse(responseCode = "201", content = {
+			@Content(schema = @Schema(implementation = Cliente.class), mediaType = "application/json") }, description = "Cliente cadastrado com sucesso"),
 			@ApiResponse(responseCode = "401", description = "Erro de autenticação"),
 			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso"),
 			@ApiResponse(responseCode = "404", description = "Recurso não encontrado"),
-			@ApiResponse(responseCode = "505", description = "Exceção interna da aplicação") 
-			}
-	)
+			@ApiResponse(responseCode = "505", description = "Exceção interna da aplicação") })
 	@PostMapping
-	public ResponseEntity<Object> inserirPedido(@RequestBody PedidoRequestDTO dto) { 
+	public ResponseEntity<Object> inserirPedido(@RequestBody PedidoRequestDTO dto) {
 		PedidoResponseDTO dtoResponse = service.inserirPedido(dto);
 		return ResponseEntity.created(null).body(dtoResponse);
 	}
-	
+
 	@PutMapping("/{id}")
-    public ResponseEntity<Object> atualizarPedido(@PathVariable Long id, @RequestBody PedidoRequestDTO pedidoDTO) {
-		ClienteResponseDTO pedidoAtualizado = service.atualizarPedido(id, pedidoDTO);
-        return ResponseEntity.ok(pedidoAtualizado);
-    }
+	public ResponseEntity<Object> atualizarPedido(@PathVariable Long id, @RequestBody PedidoRequestDTO pedidoDTO) {
+		PedidoResponseDTO pedidoAtualizado = service.atualizarPedido(id, pedidoDTO);
+		return ResponseEntity.ok(pedidoAtualizado);
+	}
 }

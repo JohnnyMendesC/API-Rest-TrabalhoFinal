@@ -22,6 +22,7 @@ import br.com.serratec.entity.Endereco;
 import br.com.serratec.exception.EmailException;
 import br.com.serratec.repository.ClienteRepository;
 import br.com.serratec.repository.EnderecoRepository;
+import jakarta.transaction.Transactional;
 
 @Service
 public class ClienteService {
@@ -60,6 +61,7 @@ public class ClienteService {
 	}
 
 	// POST | INSERIR
+	@Transactional
 	public ClienteResponseDTO inserirCliente(ClienteRequestDTO requisicaoDTO) {
 		// 1ºBUSCA EXCEPTIONS
 		Optional<Cliente> u = repository.findByEmail(requisicaoDTO.getEmail());

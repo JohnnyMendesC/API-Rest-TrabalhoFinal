@@ -1,8 +1,6 @@
 package br.com.serratec.entity;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 
 import br.com.serratec.enums.StatusPedido;
@@ -12,7 +10,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
@@ -29,8 +26,8 @@ public class Pedido {
 	@JoinColumn(name = "id_cliente")
 	private Cliente cliente;
 	
-	private LocalDate data; // aaaa/mm/dd
-	private LocalTime hora; // hh:mm 
+	//private LocalDate data; // aaaa/mm/dd
+	//private LocalTime hora; // hh:mm 
 	
 	// Usando Carrinho como entidade intermediária, para detalhar a quantidade com com os produtos e descontos 
 	@OneToMany(mappedBy = "pedido")
@@ -50,6 +47,7 @@ public class Pedido {
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
+	/*
 	public LocalDate getData() {
 		return data;
 	}
@@ -62,6 +60,7 @@ public class Pedido {
 	public void setHora(LocalTime hora) {
 		this.hora = hora;
 	}
+	*/
 	public StatusPedido getStatus() {
 		return status;
 	}

@@ -14,7 +14,7 @@ public class MailConfig {
 		
 		SimpleMailMessage mail = new SimpleMailMessage();
 		
-		mail.setFrom("");
+		mail.setFrom("johnny.carmo@aluno.senai.br");
 		mail.setTo(para);
 		mail.setSubject(assunto);
 		mail.setText("Dados de cadastro do cliente:\n"+texto+"\n\natividade ecommerce - grupo 3");

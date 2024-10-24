@@ -1,11 +1,13 @@
 package br.com.serratec.repository;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import br.com.serratec.entity.Produto;
 
 public interface ProdutoRepository extends JpaRepository<Produto, Long> {
-	
+	Optional<Produto> findById(Long id);
 	/* METODOS DE BUSCA
 	List<Usuario> findByNameIs(String name);
 	List<Usuario> findByNameEquals(String name);

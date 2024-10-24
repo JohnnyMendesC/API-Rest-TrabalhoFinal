@@ -1,8 +1,5 @@
 package br.com.serratec.dto;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-
 import br.com.serratec.entity.Pedido;
 import br.com.serratec.enums.StatusPedido;
 
@@ -21,36 +18,45 @@ public class PedidoRequestDTO {
 	private String cep;
 	private String numeroResidencia;
 	private String complemento;
-	private LocalDate data;
-	private LocalTime hora;
+	//private LocalDate data;
+	//private LocalTime hora;
 	private StatusPedido status;
-
+	private Long clienteId;
+	
 	// (anotação model mapper também funciona)
 	// construtor cheio
 	public PedidoRequestDTO(Pedido pedido) {
-		this.nome = pedido.getCliente().getNome();
-		this.telefone = pedido.getCliente().getTelefone();
-		this.email = pedido.getCliente().getEmail();
-		this.cpf = pedido.getCliente().getCpf();
-		this.cep = pedido.getCliente().getEndereco().getCep();
-		this.numeroResidencia = pedido.getCliente().getNumeroResidencia();
-		this.complemento = pedido.getCliente().getComplemento();
-		this.data = pedido.getData();
-		this.hora = pedido.getHora();
-		this.status = pedido.getStatus();
-		this.id = pedido.getCliente().getId();
-				
+		
+	this.nome = pedido.getCliente().getNome();
+	this.telefone = pedido.getCliente().getTelefone();
+	this.email = pedido.getCliente().getEmail();
+	this.cpf = pedido.getCliente().getCpf();
+	this.cep = pedido.getCliente().getEndereco().getCep();
+	this.numeroResidencia = pedido.getCliente().getNumeroResidencia();
+	this.complemento = pedido.getCliente().getComplemento();
+	//this.data = pedido.getData();
+	//this.hora = pedido.getHora();
+	this.status = pedido.getStatus();
+	this.clienteId = pedido.getCliente().getId();
 	}
-	
-	
-	
-	// construtor vazio
 
+	// construtor vazio
+	
 	public PedidoRequestDTO() {
 	}
+	
+	public void setClienteId(Long clienteId) {
+		this.clienteId = clienteId;
+	}
+
+
+
+	
+	
+	
 
 	// getset
-
+/*
 	public LocalDate getData() {
 		return data;
 	}
@@ -66,7 +72,7 @@ public class PedidoRequestDTO {
 	public void setHora(LocalTime hora) {
 		this.hora = hora;
 	}
-
+*/
 	public String getNome() {
 		return nome;
 	}

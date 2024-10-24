@@ -1,28 +1,47 @@
 package br.com.serratec.entity;
 
+import org.hibernate.validator.constraints.br.CPF;
+
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class Cliente {
 //8 ATRIBUTOS
 //ID, Nome, Telefone, Email, Cpf, Endereco, NumeroResidencia, Complemento
 
-//da pessoa:
+//da pessoa com validações:
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+	
+	@NotBlank(message = "Preencha o nome")
+	@Size(max = 50)
+	@Column(nullable = false, length = 50)
 	@Schema(description = "Nome de usuário")
 	private String nome;
+	
+	@NotBlank(message = "Preenchimento obrigatório do telefone")
+	@Size(max = 15, min = 10)
+	@Pattern(regexp="\\d{2} (\\d{5}|\\d{4})-\\d{4}")
 	@Schema(description = "Número de contato de usuário")
 	private String telefone;
+	
+	@Email
 	@Schema(description = "Email único de usuário")
 	private String email;
+	
+	@CPF(message = "CPF Inválido")
 	@Schema(description = "Cadastro de pessoa física")
 	private String cpf;
 

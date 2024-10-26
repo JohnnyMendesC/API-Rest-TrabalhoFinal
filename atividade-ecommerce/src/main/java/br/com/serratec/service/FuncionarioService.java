@@ -18,9 +18,11 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import br.com.serratec.dto.FuncionarioRequestDTO;
 import br.com.serratec.dto.FuncionarioResponseDTO;
 import br.com.serratec.entity.Endereco;
+import br.com.serratec.entity.Foto;
 import br.com.serratec.entity.Funcionario;
 import br.com.serratec.exception.ResourceNotFoundException;
 import br.com.serratec.repository.EnderecoRepository;
+import br.com.serratec.repository.FotoRepository;
 import br.com.serratec.repository.FuncionarioRepository;
 import jakarta.transaction.Transactional;
 
@@ -36,6 +38,8 @@ public class FuncionarioService {
 	@Autowired
 	private FotoService fotoService;
 
+	@Autowired
+	private FotoRepository fotoRepository;
 
 	//
 	//	METODO PRO POST
@@ -80,8 +84,11 @@ public class FuncionarioService {
 	//	METODO PRO PUT
 	//
 	@Transactional
-	public FuncionarioResponseDTO atualizarFuncionario(Long id, FuncionarioRequestDTO dto, MultipartFile file) throws IOException {
-		Funcionario funcionario = new Funcionario();
+	public FuncionarioResponseDTO atualizarFuncionario(Long id, Long idFoto, FuncionarioRequestDTO dto, MultipartFile file) throws IOException {
+	 // Recuperar o funcionário existente
+	    Funcionario funcionario = repository.findById(id)
+	        .orElseThrow(() -> new ResourceNotFoundException("Funcionário não encontrado."));
+	 
 		funcionario.setId(id);
 		funcionario.setNome(dto.getNome());
 		funcionario.setTelefone(dto.getTelefone());
@@ -106,13 +113,24 @@ public class FuncionarioService {
 				endereco.setLocalidade(enderecoViaCep.get().getLocalidade());
 				endereco.setLogradouro(enderecoViaCep.get().getUf());
 				enderecoRepository.save(endereco);
+				funcionario.setEndereco(endereco);
 			} else {
 				throw new HttpClientErrorException(HttpStatus.NOT_FOUND);
 			}
 
 		}
 		funcionario = repository.save(funcionario);
-		fotoService.inserir(funcionario, file);
+		
+		Optional<Foto> fotoExistente = fotoRepository.findByFuncionario(funcionario);
+		if (fotoExistente != null) {
+		    // Atualizar a foto existente
+		    fotoExistente.get().setDados(file.getBytes()); // Exemplo de atualização
+		    fotoRepository.save(fotoExistente.get());
+		} else {
+		    // Inserir nova foto
+		    fotoService.inserir(funcionario, file);
+		}
+		fotoService.atualizarFoto(idFoto, file);
 		return adicionarUrlFoto(funcionario);
 	}
 	
@@ -121,40 +139,13 @@ public class FuncionarioService {
 	//	METODO PRO DELETE
 	//
 	@Transactional
-	public ResponseEntity<FuncionarioResponseDTO> removerFuncionario(Long id, FuncionarioRequestDTO dto, MultipartFile file) throws IOException {
-		Funcionario funcionario = new Funcionario();
-		funcionario.setId(id);
-		funcionario.setNome(null);
-		funcionario.setTelefone(null);
-		funcionario.setCargo(null);
-		funcionario.setNumeroResidencia(null);
-		funcionario.setComplemento(null);
-		
-
-		Endereco endereco = enderecoRepository.findByCep(dto.getCep());
-		if (endereco != null) {
-			funcionario.setEndereco(null);
-		} else {
-			RestTemplate rs = new RestTemplate();
-			String uri = "https://viacep.com.br/ws/" + dto.getCep() + "/json/";
-			Optional<Endereco> enderecoViaCep = Optional.ofNullable(rs.getForObject(uri, Endereco.class));
-			if (enderecoViaCep.get().getCep() != null) {
-				String cepSemTraco = enderecoViaCep.get().getCep().replaceAll("-", "");
-				enderecoViaCep.get().setCep(cepSemTraco);
-				endereco = new Endereco();
-				endereco.setCep(enderecoViaCep.get().getCep());
-				endereco.setBairro(enderecoViaCep.get().getBairro());
-				endereco.setLocalidade(enderecoViaCep.get().getLocalidade());
-				endereco.setLogradouro(enderecoViaCep.get().getUf());
-				enderecoRepository.save(null);
-			} else {
-				throw new HttpClientErrorException(HttpStatus.NOT_FOUND);
-			}
-
+	public ResponseEntity<FuncionarioResponseDTO> removerFuncionario(Long id, Long idFoto) throws IOException {
+		if (repository.existsById(id)) {
+			fotoRepository.deleteById(idFoto);
+			repository.deleteById(id);
+			return ResponseEntity.noContent().build();
 		}
-		funcionario = repository.save(funcionario);
-		fotoService.inserir(funcionario, file);
-		return ResponseEntity.noContent().build();
+		return ResponseEntity.notFound().build();
 	}
 	
 	//

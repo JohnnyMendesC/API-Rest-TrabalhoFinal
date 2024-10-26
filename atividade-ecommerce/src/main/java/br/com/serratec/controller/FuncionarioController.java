@@ -73,9 +73,9 @@ public class FuncionarioController {
 	    @ApiResponse(responseCode = "404", description = "Funcionário não encontrado"),
 	    @ApiResponse(responseCode = "500", description = "Exceção interna da aplicação")
 	})
-	@PutMapping("/{id}")
-    public ResponseEntity<Object> atualizar(@PathVariable Long id, @RequestPart FuncionarioRequestDTO dto, @RequestPart MultipartFile file)throws IOException  {
-		FuncionarioResponseDTO funcionarioAtualizado = service.atualizarFuncionario(id, dto, file);
+	@PutMapping("/{id}/fotos/{idFoto}")
+    public ResponseEntity<Object> atualizar(@PathVariable Long id,  @PathVariable Long idFoto, @RequestPart FuncionarioRequestDTO dto, @RequestPart MultipartFile file)throws IOException  {
+		FuncionarioResponseDTO funcionarioAtualizado = service.atualizarFuncionario(id, idFoto, dto, file);
         return ResponseEntity.ok(funcionarioAtualizado);
     }
 	
@@ -90,9 +90,10 @@ public class FuncionarioController {
 	    @ApiResponse(responseCode = "404", description = "Funcionário não encontrado"),
 	    @ApiResponse(responseCode = "500", description = "Exceção interna da aplicação")
 	})
-	@DeleteMapping("/{id}")
-    public ResponseEntity<FuncionarioResponseDTO> remover(@PathVariable Long id, @RequestPart FuncionarioRequestDTO dto, @RequestPart MultipartFile file)throws IOException  {
-        return ResponseEntity.noContent().build();
+	@DeleteMapping("/{id}/fotos/{idFoto}")
+    public ResponseEntity<FuncionarioResponseDTO> remover(@PathVariable Long id, @PathVariable Long idFoto)throws IOException  {
+        service.removerFuncionario(id, idFoto);
+		return ResponseEntity.noContent().build();
     }
 	
 	//

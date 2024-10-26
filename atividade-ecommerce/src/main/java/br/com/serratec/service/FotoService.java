@@ -25,6 +25,18 @@ public class FotoService {
 		foto.setFuncionario(funcionario);
 		return repository.save(foto);
 	}
+	
+    public Foto atualizarFoto(Long idFoto, MultipartFile file) throws IOException {
+        Foto fotoExistente = repository.findById(idFoto)
+                .orElseThrow(() -> new ResourceNotFoundException("Foto não encontrada"));
+
+        // Atualiza os dados da foto
+        fotoExistente.setDados(file.getBytes());
+        fotoExistente.setNome(file.getOriginalFilename());
+        fotoExistente.setTipo(file.getContentType());
+
+        return repository.save(fotoExistente);
+    }
 
 	public Foto buscarPorIdFuncionario(Long id) {
 		Funcionario funcionario = new Funcionario();

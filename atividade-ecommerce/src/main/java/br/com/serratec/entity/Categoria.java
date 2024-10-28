@@ -1,12 +1,21 @@
 package br.com.serratec.entity;
 
+
+
+
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import br.com.serratec.enums.EnumPreparo;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Categoria {
@@ -15,10 +24,12 @@ public class Categoria {
 	private Long id;
 	private String nome;
 	
+	@JsonManagedReference
+    @OneToMany(mappedBy = "categoria", cascade = CascadeType.REMOVE)
+    private List<Produto> produto;
+	
 	@Enumerated(EnumType.STRING)
 	private EnumPreparo enumpreparo;
-	
-
 	
 	public Long getId() {
 		return id;
@@ -39,7 +50,12 @@ public class Categoria {
 	public void setEnumpreparo(EnumPreparo enumpreparo) {
 		this.enumpreparo = enumpreparo;
 	}
+	public List<Produto> getProduto() {
+		return produto;
+	}
+	public void setProduto(List<Produto> produto) {
+		this.produto = produto;
+	}
 	
-
 	
 }

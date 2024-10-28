@@ -1,5 +1,9 @@
 package br.com.serratec.entity;
 
+
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -18,6 +22,7 @@ public class Produto {
 	
 	private Double preco;
 	
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "id_categoria")
 	private Categoria categoria;
@@ -27,7 +32,6 @@ public class Produto {
 	 * @throws
 	 * @return
 	 */
-
 		
 	//get set
 	public Long getId() {
@@ -46,20 +50,20 @@ public class Produto {
 		this.nome = nome;
 	}
 
-	public Categoria getCategoria() {
-		return categoria;
-	}
-
-	public void setCategoria(Categoria categoria) {
-		this.categoria = categoria;
-	}
-
 	public Double getPreco() {
 		return preco;
 	}
 
 	public void setPreco(Double preco) {
 		this.preco = preco;
+	}
+
+	public Categoria getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
 	}
 	
 	

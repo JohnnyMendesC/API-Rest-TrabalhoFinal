@@ -5,13 +5,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.serratec.entity.Categoria;
@@ -35,6 +35,11 @@ public class CategoriaController {
 	public List<Categoria> listar() {
 		return repository.findAll();
 	}
+	
+	@GetMapping("{id}")
+    public Categoria listarCategoriaPorId(@PathVariable Long id) {
+        return repository.findById(id).orElse(null);
+    }
 
 	@PutMapping("{id}")
 	public ResponseEntity<Categoria> alterarCategoria(@PathVariable Long id, @Valid @RequestBody Categoria c) {
@@ -44,5 +49,14 @@ public class CategoriaController {
 		}
 		return ResponseEntity.notFound().build();	
 	}	
+	@DeleteMapping("{id}")
+    public ResponseEntity<Void> deletarCategoria(@PathVariable Long id) {
+        if (repository.existsById(id)) {
+            repository.deleteById(id);
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+	}
 }
 
